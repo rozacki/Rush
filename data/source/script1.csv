@@ -1,0 +1,1 @@
+"MATCH ()-[r:WORKING_WITH]->() RETURN r LIMIT 25"

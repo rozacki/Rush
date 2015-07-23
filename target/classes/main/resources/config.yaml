@@ -1,0 +1,23 @@
+queuemptyretrydelay = //delay before next attempt to read queue when it was empty
+retry=how many retries individual job
+delay=what's the delay before retry
+
+//consumer
+connection_timeout
+request_timeout
+
+//sim
+serverconnecitonexception%
+serverconnectiontimeput=after which there will be exception
+serverrequestexception%
+serverrequesttimeout=after which there will be exception
+
+
+//queue
+q_length
+
+
+//consumers
+consumers=1
+
+//
