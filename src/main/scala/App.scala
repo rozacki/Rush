@@ -107,7 +107,7 @@ object main extends App{
   //todo:rewrite all events in this way
   def sendEvent(event: Any): Unit ={
     event match{
-      case e:SetQueueLength=>MonitorActor!e
+      case e:EmptyQueue=>MonitorActor!e
       case e:IsFinished=>{
         implicit var timeout  = Timeout(5.seconds)
         var future            = MonitorActor ?  e
@@ -116,18 +116,16 @@ object main extends App{
         Await.result(future,timeout.duration).asInstanceOf[Boolean]
       }
       case e:Any => MonitorActor! e
-      //blocking an waiting for monitor
-
     }
   }
   //turn into lambda currentDelay.map(currentDelay)etc
-  def getDelay(implicit currentDuaration:FiniteDuration): FiniteDuration ={
+  def incDelay(implicit currentDuaration:FiniteDuration): FiniteDuration ={
     currentDuaration match {
       case d:FiniteDuration if d >= GlobalMaxDelay => GlobalMaxDelay
       case d:FiniteDuration if d < GlobalMaxDelay => (d * 1.5).asInstanceOf[FiniteDuration]
     }
   }
-  def resetDelay()=1 millisecond
+  def minDelay()=1 millisecond
 }
 
 

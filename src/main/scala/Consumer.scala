@@ -40,7 +40,7 @@ object Consumer{
         if(MaxJobsLimit<=PendingJobs){
           after(delay, using = main.system.scheduler) {
             Future {
-              process(main.getDelay(delay))
+              process(main.incDelay(delay))
             }
           }
           return
@@ -53,10 +53,10 @@ object Consumer{
         //
         case Failure(e) => e match {
           case e: java.util.NoSuchElementException => {
-            main.sendEvent(SetQueueLength(0))
+            main.sendEvent(EmptyQueue(true))
             after(delay, using = main.system.scheduler) {
               Future {
-                process(main.getDelay)
+                process(main.incDelay)
               }
             }
             return
@@ -66,10 +66,9 @@ object Consumer{
         //we get data now let's try to start new job
         case Success(data) => {
           //do i have to remember reference?
-          new Job(data,MaxRetry,1 millisecond)
+          new Job(data,MaxRetry,main.minDelay)
           PendingJobs+=1
-          delayX=main.resetDelay
-          main.sendEvent(SetQueueLength(Queue.length))
+          delayX=main.minDelay
         }
       }
     }

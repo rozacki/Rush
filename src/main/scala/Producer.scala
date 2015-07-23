@@ -44,12 +44,12 @@ object Producer{
         if (Queue.length >= MaxQueueSize) {
           after(delay, using = main.system.scheduler) {
             Future {
-              enque(main.getDelay)
+              enque(main.incDelay)
             }
           }
           return
         } else {
-          delayX=main.resetDelay
+          delayX=main.minDelay
           Queue.enqueue(iterator.next)
         }
       }
