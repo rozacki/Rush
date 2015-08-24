@@ -42,7 +42,7 @@ class Monitor extends Actor{
     }
     //todo: queue may be not empty
     case Get=> if(Producing==false&&JobsCounter==0&&IsEmptyQueue==true)
-                  //it should not be finished but about to finish as there are messages in the mailbox!
+                  //it should not be finished but about to finish as there are messages from jobs in the mailbox!
                   sender!IsFinished
                else
                   sender! "jobs:%d, finished_jobs:%d, connection_errors:%d, request_errors:%d, is_empty_queue:%s, producing:%s".

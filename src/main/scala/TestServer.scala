@@ -2,20 +2,15 @@ package esbook10
 
 import scala.concurrent.Future
 import scala.util.Try
-import scala.concurrent.ExecutionContext.Implicits.global
+import org.elasticsearch.action.index.IndexResponse
 
-/**
- * Created by chrisrozacki on 16/07/15.
- */
 object TestServer{
   var RequestId = 0
+  val IndexName = "scala_cookbook"
   //throws exception or returns Future
-  def write(data:String):Try[Future[String]]={
+  def write(data:String):Try[Future[IndexResponse]]={
     Try{
-      //here you can throw connection exception
-      Future{
-        "error code returned from server "+RequestId.toString
-      }
+      ElastSearchClient.Index(IndexName,data)
     }
   }
 }

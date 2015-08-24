@@ -66,7 +66,7 @@ object Consumer{
         //we get data now let's try to start new job
         case Success(data) => {
           //do i have to remember reference?
-          new Job(data,MaxRetry,main.minDelay)
+          new Job(data)
           PendingJobs+=1
           delayX=main.minDelay
         }

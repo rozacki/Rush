@@ -58,7 +58,7 @@ object main extends App{
 
   val init  = Try {
     Consumer.Queue = Queue[String]()
-    Producer.process(Consumer.Queue, args(0))
+    ProducerPDF.process(Consumer.Queue, args(0))
     Consumer.start
     sendEvent(StartSession)
 
